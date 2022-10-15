@@ -23,11 +23,47 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
+function minesweeper(matrix) {
+  // throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
+  const result = [];
+
+  for(let i = 0; i < matrix.length; i++){
+    result[i] = [];
+    for(let j = 0; j < matrix[i].length; j++){
+      let count = 0;
+      // count += matrix[i][j] ? 1: 0;
+      if(matrix[i][j-1] !== undefined) count += matrix[i][j-1] ? 1: 0; // left
+      if(matrix[i][j+1] !== undefined) count += matrix[i][j+1] ? 1: 0; // right
+      if(matrix[i-1] !== undefined) count += matrix[i-1][j] ? 1: 0; // top
+      if(matrix[i+1] !== undefined) count += matrix[i+1][j] ? 1: 0; // bottom
+
+      if(matrix[i-1] !== undefined && matrix[i][j-1] !== undefined) count += matrix[i-1][j-1] ? 1: 0; // top left
+      if(matrix[i-1] !== undefined && matrix[i][j+1] !== undefined) count += matrix[i-1][j+1] ? 1: 0; // top right
+      if(matrix[i+1] !== undefined && matrix[i][j-1] !== undefined) count += matrix[i+1][j-1] ? 1: 0; // bottom left
+      if(matrix[i+1] !== undefined && matrix[i][j+1] !== undefined) count += matrix[i+1][j+1] ? 1: 0; // bottom right
+
+      // result[i].push(`${count}-${matrix[i][j]}`);
+      result[i].push(count);
+    }
+  }
+
+  return result;
 }
 
 module.exports = {
   minesweeper
 };
+
+// const matrix = [
+//   [true, false, false],
+//   [false, true, false],
+//   [false, false, false]
+//  ];
+ 
+// minesweeper(matrix)
+//  [
+//   [1, 2, 1],
+//   [2, 1, 1],
+//   [1, 1, 1]
+//  ];
